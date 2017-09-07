@@ -42,7 +42,7 @@ axis equal;
 grid on;
 hold on;
 fontsize=12;
-xlabel('Time [s]', 'FontSize', fontsize);
+xlabel('Flight Time [s]', 'FontSize', fontsize);
 ylabel('Orientation [rad]', 'FontSize', fontsize);
 set(gca,'FontSize',fontsize);
 
