@@ -19,7 +19,7 @@ att.sp.yaw = data.ATSP(:,4);
 mode.lineno = data.STAT(:,1);
 mode.main = data.STAT(:,2); 
 
-%% Grafico Posicao
+%% Local Position Graphics
 figure
 axis equal;
 grid on;
@@ -34,4 +34,18 @@ p1 = plot3(lpos.re.x, lpos.re.y, lpos.re.z);
 p2 = plot3(lpos.re.x, lpos.re.y, lpos.re.z);
 p3 = plot3(lpos.re.x, lpos.re.y, lpos.re.z);
 
-legend([p1 p2],'Modo MANUAL','Modo OFFBOARD','Location','SouthEast');
+legend([p1 p2],'Mode MANUAL','Mode OFFBOARD','Location','SouthEast');
+
+%% Yaw Graphics
+figure 
+axis equal;
+grid on;
+hold on;
+fontsize=12;
+xlabel('Time [s]', 'FontSize', fontsize);
+ylabel('Orientation [rad]', 'FontSize', fontsize);
+set(gca,'FontSize',fontsize);
+
+p4 = plot(att.re.yaw)
+
+legend('Yaw');
