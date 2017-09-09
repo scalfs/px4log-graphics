@@ -34,7 +34,7 @@ for i = 1:size(mode.main)
 end
 
 %% Local Position Graphics
-%figure
+figure
 axis equal;
 grid on;
 hold on;
@@ -44,15 +44,22 @@ ylabel('Y [m]', 'FontSize', fontsize);
 zlabel('Z [m]', 'FontSize', fontsize);
 set(gca,'FontSize',fontsize);
 
-x = linspace (-1, 1, 653);
-h = ones(1,653)*6;
+az = -138;
+el = 44;
+
+x = linspace (-1, 1, size(lpos.re.x, 1));
+h = ones(1, size(lpos.re.x, 1))*mean(lpos.re.z(change1r1:change2r1));
 
 p1 = plot3(lpos.re.x(1:change1r1), lpos.re.y(1:change1r1), lpos.re.z(1:change1r1), 'r', 'LineWidth', 2.0);
 p2 = plot3(lpos.re.x(change1r1:change2r1), lpos.re.y(change1r1:change2r1), lpos.re.z(change1r1:change2r1), 'b', 'LineWidth', 2.0);
 p3 = plot3(lpos.re.x(change2r1:end), lpos.re.y(change2r1:end), lpos.re.z(change2r1:end), 'r', 'LineWidth', 2.0);
-%p3 = plot3(3.6*cos(2*pi*x),3.6*sin(2*pi*x),h,'k','LineWidth', 2.0);
+p4 = plot3(3.8*cos(2*pi*x)+3,3.8*sin(2*pi*x)-1.5,h,'k','LineWidth', 2.0);
 
-legend([p1 p2],'MANUAL Control','VISUAL Control','Location','SouthEast');
+centers = [3 -1.5];
+radii = 3.8;
+p5 = viscircles(centers,radii, 'EdgeColor', 'g');
+
+legend([p1 p2 p4 p5],'MANUAL Control','VISUAL Control','Desired Trajectory','Pioneer Trajectory','Location','SouthEast');
 
 %% Yaw Graphics
 figure
@@ -64,6 +71,6 @@ xlabel('Flight Time [s]', 'FontSize', fontsize);
 ylabel('Yaw [rad]', 'FontSize', fontsize);
 set(gca,'FontSize',fontsize);
 
-p4 = plot(att.re.yaw, 'k', 'LineWidth', 2.0)
+p6 = plot(att.re.yaw, 'k', 'LineWidth', 2.0);
 
 legend('Yaw');
