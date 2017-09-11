@@ -1,5 +1,7 @@
 function [yaw, mode] = yaw_plot(log);
 
+data = load(log, 'ATT', 'ATSP', 'STAT', 'GPS');
+
 att.re.lineno = data.ATT(:,1);
 att.re.yaw = data.ATT(:,8);
 att.sp.yaw = data.ATSP(:,4);
