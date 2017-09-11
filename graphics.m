@@ -1,6 +1,6 @@
 function [lpos, yaw, mode] = graphics(log);
 
-data = load(log, 'ATT', 'ATSP', 'LPOS', 'LPSP', 'STAT');
+data = load(log, 'ATT', 'ATSP', 'LPOS', 'LPSP', 'STAT', 'GPS');
 
 lpos.re.lineno = data.LPOS(:,1);
 lpos.re.x = -data.LPOS(:,2);
@@ -19,7 +19,9 @@ att.re.yaw = data.ATT(:,8);
 att.sp.yaw = data.ATSP(:,4);
 
 mode.lineno = data.STAT(:,1);
-mode.main = data.STAT(:,2); 
+mode.main = data.STAT(:,2);
+
+gps.time = data.GPS(:,2);
 
 % Look for the positions where the mode changed (manual to visual and otherwise) was made
 for i = 1:size(mode.main)
@@ -64,13 +66,21 @@ legend([p1 p2 p4 p5],'MANUAL Control','VISUAL Control','Desired Trajectory','Pio
 %% Yaw Graphics
 figure
 axis auto;
-grid on;
+grid off;
 hold on;
 fontsize=12;
-xlabel('Flight Time [s]', 'FontSize', fontsize);
+xlabel('Flight Time [mm:ss]', 'FontSize', fontsize);
 ylabel('Yaw [rad]', 'FontSize', fontsize);
 set(gca,'FontSize',fontsize);
 
-p6 = plot(att.re.yaw, 'k', 'LineWidth', 2.0);
+delta_t = gps.time(end) - gps.time(1);
+delta_t = floor(delta_t/10^6);
+
+t = linspace (0, delta_t, size(att.re.yaw,1));
+xdate = datenum(0,0,0,0,0,t);
+
+p6 = plot(xdate, att.re.yaw, 'k', 'LineWidth', 2.0);
+
+datetick('x','MM:SS')
 
 legend('Yaw');
