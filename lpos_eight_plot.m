@@ -53,7 +53,7 @@ rot = [cos(theta) -sin(theta); sin(theta) cos(theta)];
 new_points = [lpos.re.x, lpos.re.y]*rot;
 
 p1 = plot3(new_points(1:change1r, 1), new_points(1:change1r, 2), lpos.re.z(1:change1r), 'Color', [0.6 0 0], 'LineWidth', 2.0);
-p2 = plot3(new_points(change1r:change2r, 1), new_points(change1r:change2r, 2), lpos.re.z(change1r:change2r), 'Color' , [0 0 0.6], 'LineWidth', 2.0);
+p2 = plot3(new_points(change1r:change2r, 1), new_points(change1r:change2r, 2), lpos.re.z(change1r:change2r), 'Color', [0 0 0.6], 'LineWidth', 2.0);
 p3 = plot3(new_points(change2r:end, 1), new_points(change2r:end, 2), lpos.re.z(change2r:end), 'Color', [0.6 0 0], 'LineWidth', 2.0);
 p4 = plot3(11*cos(pi*x), 11*sin(2*pi*x)/2, h, 'Color', 'k', 'LineWidth', 2.0);
 p5 = plot(oito.x - 11.001, oito.y - 0.002, 'Color', [0 0.6 0], 'LineWidth', 2.0);
