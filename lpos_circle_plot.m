@@ -40,16 +40,35 @@ set(gca,'FontSize',fontsize);
 az = -138;
 el = 44;
 
+center = [3 -1.5];
+radius = 3.8;
 x = linspace (-1, 1, size(lpos.re.x, 1));
 h = ones(1, size(lpos.re.x, 1))*mean(lpos.re.z(change1r:change2r));
 
 p1 = plot3(lpos.re.x(1:change1r), lpos.re.y(1:change1r), lpos.re.z(1:change1r), 'r', 'LineWidth', 2.0);
 p2 = plot3(lpos.re.x(change1r:change2r), lpos.re.y(change1r:change2r), lpos.re.z(change1r:change2r), 'b', 'LineWidth', 2.0);
 p3 = plot3(lpos.re.x(change2r:end), lpos.re.y(change2r:end), lpos.re.z(change2r:end), 'r', 'LineWidth', 2.0);
-p4 = plot3(3.8*cos(2*pi*x)+3,3.8*sin(2*pi*x)-1.5,h,'k','LineWidth', 2.0);
+p4 = plot3(radius*cos(2*pi*x)+center(1),radius*sin(2*pi*x)+center(2),h,'k','LineWidth', 2.0);
 
-centers = [3 -1.5];
-radii = 3.8;
-p5 = viscircles(centers,radii, 'EdgeColor', 'g');
+p5 = viscircles(center,radius, 'EdgeColor', 'g');
 
 legend([p1 p2 p4 p5],'MANUAL Control','VISUAL Control','Desired Trajectory','Pioneer Trajectory','Location','SouthEast');
+
+%% GPS Error
+
+dif = 1500;
+[theta, rho] = cart2pol(lpos.re.x(change1r+dif:change2r-dif)-center(1), lpos.re.y(change1r+dif:change2r-dif) - center(2));
+grid on
+plot3(lpos.re.x(change1r+dif:change2r-dif)-center(1), lpos.re.y(change1r+dif:change2r-dif)-center(2),lpos.re.z(change1r+dif:change2r-dif),'.')
+
+err.hor = rho - radius;
+err.z = lpos.re.z(change1r+dif:change2r-dif) - 10;;
+
+err_ver = mean(err.z)
+std_ver = std(err.z)
+max_ver = max(abs(err.z))
+
+
+err_hor = mean(err.hor)
+std_hor = std(err.hor)
+max_hor = max(abs(err.hor))

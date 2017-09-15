@@ -21,6 +21,12 @@ mode.main = data.STAT(:,2);
 oito.x = data_pioneer(:,1)/1000;
 oito.y = data_pioneer(:,2)/1000;
 
+% Rotate points to adjust to the trajectory
+theta = -25;
+theta = degtorad(theta);
+rot = [cos(theta) -sin(theta); sin(theta) cos(theta)];
+new_points = [lpos.re.x, lpos.re.y]*rot;
+
 % Look for the positions where the mode changed (manual to visual and otherwise) was made
 for i = 1:size(mode.main)
     if mode.main(i) == 2 && mode.main(i+1) == 7 
@@ -44,13 +50,9 @@ set(gca,'FontSize',fontsize);
 az = -138;
 el = 44;
 
+% Variables for ploting the desired trajectory
 x = linspace (-1, 1, size(lpos.re.x, 1));
 h = ones(1, size(lpos.re.x, 1))*mean(lpos.re.z(change1r:change2r));
-
-theta = -25;
-theta = degtorad(theta);
-rot = [cos(theta) -sin(theta); sin(theta) cos(theta)];
-new_points = [lpos.re.x, lpos.re.y]*rot;
 
 p1 = plot3(new_points(1:change1r, 1), new_points(1:change1r, 2), lpos.re.z(1:change1r), 'Color', [0.6 0 0], 'LineWidth', 2.0);
 p2 = plot3(new_points(change1r:change2r, 1), new_points(change1r:change2r, 2), lpos.re.z(change1r:change2r), 'Color' , [0 0 0.6], 'LineWidth', 2.0);
@@ -58,6 +60,19 @@ p3 = plot3(new_points(change2r:end, 1), new_points(change2r:end, 2), lpos.re.z(c
 p4 = plot3(11*cos(pi*x), 11*sin(2*pi*x)/2, h, 'Color', 'k', 'LineWidth', 2.0);
 p5 = plot(oito.x - 11.001, oito.y - 0.002, 'Color', [0 0.6 0], 'LineWidth', 2.0);
 
-
-
 legend([p1 p2 p4 p5], 'MANUAL Control', 'VISUAL Control', 'Desired Trajectory', 'Pioneer Trajectory', 'Location', 'SouthEast');
+
+%% GPS Error
+
+%[theta, rho] = cart2pol(new_points(change1r:change2r, 1), new_points(change1r:change2r, 2));
+
+
+%err.hor = rho - cos(theta)^;
+%err.z = lpos.re.z(change1r:change2r) - 10;
+
+%err_ver = mean(err.z);
+%std_ver = std(err.z);
+
+
+
+%vertical = sqrt((err.x).^2 + (err.y).^2);
