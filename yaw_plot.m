@@ -40,6 +40,7 @@ p3 = rectangle('Position',[xdate(change1r),-200,xdate(change2r),400], 'FaceColor
 p4 = rectangle('Position',[xdate(change2r),-200,xdate(end),400], 'FaceColor', [230/255 255/255 230/255], 'DisplayName', 'MANUAL Control');
 
 p1 = plot(xdate, att.re.yaw, 'Color', [0 0 128/255], 'LineWidth', 2.0);
+%p5 = plot(xdate, att.sp.yaw, 'Color', [0 128/255 0], 'LineWidth', 2.0);
 %set(gca,'XTick',[0.0; 0.0002; 0.0004; 0.0006; 0.0008; 0.00010; 0.0012])
 datetick('x','MM:SS')
 axis ([0 xdate(end) -180 50]);
