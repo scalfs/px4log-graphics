@@ -1,4 +1,4 @@
-# MATLAB Graphics for Piwhawk Flight Log
+# MATLAB Graphics for Pixhawk Flight Log
 
 Prints local position and yaw logs, with distinction between flight modes.
 
